@@ -7,9 +7,13 @@ using System;
 
 public class FileManager : MonoBehaviour
 {
-    bool isStore = false;
-    public void Save()
+    private LayersManager layersManager;
+    void Start()
     {
+        layersManager = GameObject.Find("LayersManager").GetComponent<LayersManager>();
+    }
+    public void Save()
+    { 
         if (LayersManager.listLayers.Count > 0 && LayersManager.drawLayers.Count > 0)
         {
             string filePath = Application.dataPath + "/Resources/SaveSystem/SaveData.dat";
@@ -23,10 +27,12 @@ public class FileManager : MonoBehaviour
         }
     }
 
-    public static bool Load()
+    public void Load()
     {
+        layersManager.resetLayerSystemByLoad();
+        Debug.Log("Load successful");
+        /*
         string filePath = Application.dataPath + "/Resources/SaveSystem/SaveData.dat";
-
         try
         {
             string jsonString = File.ReadAllText(filePath);
@@ -40,7 +46,7 @@ public class FileManager : MonoBehaviour
             Debug.LogError($"Failed to write to {filePath} with exception {e}");
             return false;
         }
-        /*
+        //---------------------------
         if (File.Exists(filePath))
         {
             string jsonString = File.ReadAllText(filePath);
@@ -67,6 +73,24 @@ public class FileManager : MonoBehaviour
         catch (Exception e)
         {
             Debug.LogError($"Failed to write to {filePath} with exception {e}");
+            return false;
+        }
+    }
+
+    public static bool LoadFromFile()
+    {
+        string filePath = Application.dataPath + "/Resources/SaveSystem/SaveData.dat";
+        try
+        {
+            string jsonString = File.ReadAllText(filePath);
+            DataManager dataLoad = JsonUtility.FromJson<DataManager>(jsonString);
+            dataLoad.buildListLayer();
+            dataLoad.buildDrawLayer();
+            return true;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Failed to read from {filePath} with exception {e}");
             return false;
         }
     }

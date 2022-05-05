@@ -23,8 +23,8 @@ public class LayersManager : MonoBehaviour
     private GridObjectCollection gridObjectCollection;
     private ScrollingObjectCollection scrollingObjectCollection;
 
-    bool isReset;
-    bool isSort;
+    public static bool isReset;
+    public static bool isSort;
 
     public GameObject ColorBlock;
     internal GameObject DisplayObjectBlock;
@@ -32,6 +32,7 @@ public class LayersManager : MonoBehaviour
     //Collect Data which need to be saved
     public static List<GameObject> listLayers = new List<GameObject>();
     public static List<GameObject> drawLayers = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -240,8 +241,8 @@ public class LayersManager : MonoBehaviour
         
     }
 
-    #region Save&Load Layer Manage
-    public void resetLayerSystemByLoad()
+    #region Save&Load Layer Manager
+    internal void resetLayerSystemByLoad()
     {
         listLayers.Clear();
         drawLayers.Clear();
@@ -253,7 +254,7 @@ public class LayersManager : MonoBehaviour
         {
             Destroy(oldDrawLayer);
         }
-        if (FileManager.Load())
+        if (FileManager.LoadFromFile())
         {
             selectedListLayer = layersInList[0];
             selectedDrawingLayer = layersInDrawing[0];

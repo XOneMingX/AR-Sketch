@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 using Microsoft.MixedReality.Toolkit;
 using Microsoft.MixedReality.Toolkit.Input;
@@ -66,7 +65,6 @@ public class Draw : MonoBehaviour
                 isStartDraw = false;
                 currentLineRenderer = null;
             }
-
             if (StartDrawing < GrabThreshold && !isStartDraw)
             {
                 CreateBrush();
